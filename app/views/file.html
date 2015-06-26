@@ -1,0 +1,74 @@
+
+<!--data-flow-file-success="$file.msg = $message"-->
+<!--data-flow-files-submitted="upfile.progress( $files, $event, $flow )"-->
+    
+<div class="row" data-flow-init="flowTarget"
+    data-flow-files-submitted="$flow.upload()"
+    data-flow-file-success="upfile.success( $file, $message, $flow )"
+    data-flow-file-progress="upfile.progress( $file, $flow )"
+    data-flow-file-added="upfile.added( $file, $event, $flow )"
+    data-flow-files-added="upfile.fadded( $files, $event, $flow )"
+    data-flow-file-retry="upfile.retry( $file, $flow )"
+    data-flow-file-error="upfile.error( $file, $message, $flow )"
+    data-flow-error="upfile.progress( $file, $message, $flow )"
+    data-flow-complete="upfile.complete()"
+    data-flow-upload-started="upfile.uploadStarted()"
+    data-flow-progress="upfile.fProgress()">
+    <div class="col-sm-12">
+        <div class="row">
+            <div class="col-sm-6 last">
+                <div class="progress" ng-show="$flow.isUploading()">
+                    <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%">
+                        <span class="sr-only">Uploading..</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 25px"><span class="glyphicon glyphicon-file"></span></th>
+                            <th style="width: 150px">Size</th>
+                            <th style="min-width: 200px">Name</th>
+                            <th style="width: 200px">Preview</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr data-ng-repeat="file in $flow.files">
+                            <td><span class="glyphicon glyphicon-file"></span></td>
+                            <td>{{file.size / 1024 | number:0}} KB</td>
+                            <td><a ng-href="{{flowApi}}{{file.name}}" target="_blank">{{file.name}}</a></td>
+                            <td><img flow-img="file" height="50" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-success" data-flow-drop data-flow-drag-enter="class='panel panel-primary'" data-flow-drag-leave="class='panel panel-success'"
+                     ng-class="class">
+                    <div class="panel-body">
+                        Drag And Drop your file here
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <span class="btn btn-default" data-flow-btn ng-click="upload()">
+                    <span class="glyphicon glyphicon-upload"></span> Upload File
+                </span>
+                <span class="btn btn-default" data-flow-btn data-flow-directory ng-show="$flow.supportDirectory">
+                    <span class="glyphicon glyphicon-folder-open"></span> Upload Folder
+                </span>
+                <span class="btn btn-primary" ng-click="save(model)">
+                    <span class="glyphicon glyphicon-floppy-disk"></span> Save
+                </span>
+            </div>
+        </div>
+    </div>
+    
+</div>
